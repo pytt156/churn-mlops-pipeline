@@ -32,3 +32,6 @@ def test_modell_roc_auc(resultat):
     _, matvarden = resultat
 
     assert matvarden["roc_auc"] >= 0.70
+
+def test_fail():
+    assert 1==2
