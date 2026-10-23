@@ -1,0 +1,7 @@
+{
+  "roc_auc": 0.7886713693165307,
+  "accuracy": 0.824,
+  "commit": "8887b1112306901294694f8853d389217ff28790",
+  "datafil": "kundbas.csv",
+  "data_sha256": "51df885d247889baa04dce12ed4fc8b55faccefe75b00afa3342e2d731c481bb"
+}
