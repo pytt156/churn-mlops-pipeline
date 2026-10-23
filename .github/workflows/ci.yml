@@ -123,6 +123,9 @@ jobs:
       - name: Evaluate model
         run: python -m churn.evaluate
 
+      - name: Check model regression against champion
+        run: python -m churn.regression_gate
+
   docker-smoke:
     needs: evaluate
     runs-on: ubuntu-latest
