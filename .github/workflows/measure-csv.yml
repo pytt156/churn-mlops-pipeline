@@ -1,0 +1,36 @@
+name: Measure CSV delivery handling
+
+on:
+  push:
+    branches: [measure/csv-delivery]
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/setup-project
+        with:
+          python-version: "3.12"
+
+      - name: Record environment
+        run: |
+          python --version
+          pip freeze
+
+      - name: Compare original and improved validation
+        run: python -B scripts/measure_csv.py
+
+      - name: Save measurements and full validation output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: csv-delivery-measurements
+          path: measurement-results/
+          if-no-files-found: error
