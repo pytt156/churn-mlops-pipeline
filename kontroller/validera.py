@@ -5,7 +5,27 @@ from kontroller.schema import SCHEMA
 
 
 def main(fil: str) -> int:
-    df = pd.read_csv(fil)
+    try:
+        df = pd.read_csv(fil)
+    except FileNotFoundError:
+        print(f"STOPP: {fil} saknas. Kontrollera filnamnet och sökvägen.")
+        return 1
+    except pd.errors.EmptyDataError:
+        print(f"STOPP: {fil} är tom. Leverera en CSV med rubriker och datarader.")
+        return 1
+    except pd.errors.ParserError:
+        print(f"STOPP: {fil} har ett oläsbart CSV-format. Kontrollera citattecken och avgränsare.")
+        return 1
+    except UnicodeDecodeError:
+        print(f"STOPP: {fil} kunde inte avkodas. Spara CSV-filen med UTF-8-kodning.")
+        return 1
+    except OSError:
+        print(f"STOPP: {fil} kunde inte läsas. Kontrollera filåtkomst och läsbehörighet.")
+        return 1
+
+    if df.empty:
+        print(f"STOPP: {fil} innehåller inga datarader. Leverera en CSV med kundrader.")
+        return 1
 
     try:
         SCHEMA.validate(df, lazy=True)
