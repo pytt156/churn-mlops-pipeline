@@ -131,6 +131,9 @@ jobs:
             outputs/modell.joblib
             outputs/matvarden.json
 
+      - name: "Demo: tamper with the model"
+        run: printf 'x' >> outputs/modell.joblib
+
       - name: Upload model artifact
         uses: actions/upload-artifact@v4
         with:
